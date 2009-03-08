@@ -130,5 +130,3 @@ def runit(hs=10,ts=10,dbg=1):
 if __name__ == "__main__":
     import profile
     profile.run("runit(10000, 1000, dbg=0)")
-
-
