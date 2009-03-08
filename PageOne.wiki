@@ -1,13 +1,14 @@
-#summary One-sentence summary of this page.
+#summary Page created to create wiki repository
 
 = Introduction =
 
-Add your content here.
+This page was created to create the wiki in the SVN repository. 
 
 
 = Details =
 
-Add your content here.  Format your content with:
+As you can see this is utterly spectular. Of perhaps not. But that's part of
+the point I suppose. Apparently we can have...
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
