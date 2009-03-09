@@ -105,7 +105,7 @@ class hackysacker(scheduled):
         if hackysacker.counter>turns:
             return
         hackysacker.counter +=1
-        debugPrint("%d: %s got hackeysack from %s" % (hackysacker.counter, self.name, sender.name))
+        # debugPrint("%d: %s got hackeysack from %s" % (hackysacker.counter, self.name, sender.name))
         kickto = random.choice(self.circle)
         self.s.schedule(kickto.kick, self)
 
