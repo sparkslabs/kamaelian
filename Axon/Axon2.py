@@ -2,10 +2,12 @@
 
 import random
 
+C = 0
 debug = True
 def debugPrint(x):
     if debug:
         print x
+    return True
 
 class scheduler(object):
     s = None
@@ -43,67 +45,44 @@ class scheduled(object):
 
 class getmessage(object): pass
 
-#class selfscheduled(scheduled):
 class hackysacker(scheduled):
     counter = 0
     def __init__(self, name, circle, *argv, **argd):
-        debugPrint("__init__ %s" % name)
         self.s = scheduler.scheduler()
         self.__t = id(self)
         self.name = name
         self.circle = circle
         self.inboxes = {"inbox" : [] }
-#        self.inbox = []
+        self.outboxes = { }
         circle.append(self)
         super(hackysacker,self).__init__()
 
-    def activate(self, noschedule=False):
-        debugPrint("activate %s" % self.name)
-        self.next = self.main().next
-        if not noschedule:
-            self.s.schedule(self.tick)
-        return self
-
-    def reschedule(self, R):
-        debugPrint("reschedule %s" % self.name)
-        self.s.schedule(self.tick)
-
-    def tick(self):
-        debugPrint("tick %s" % self.name)
-        try:
-            R = self.next()
-            debugPrint( "R %s" % repr(R) )
-            if R:
-                self.s.schedule(R)
-        except StopIteration:
-            pass
+    def link(self, sender, outbox, reciever):
+        sender.outboxes[outbox] = reciever
 
     def run(self):
-        debugPrint("run %s" % self.name)
         self.s.run()
 
     def main(self):
         while 1:
             if hackysacker.counter>turns:
-                debugPrint( "And the game is over...." )
                 return
 
-            debugPrint("%s: Getting message from %s" % (self.name, repr([ x.name for x in self.inboxes["inbox"]]) ) )
             sender = self.inboxes["inbox"].pop(0)
-
             hackysacker.counter +=1
-            debugPrint("%d: %s got hackeysack from %s" % (hackysacker.counter, self.name, sender.name))
-
             kickto = random.choice(self.circle)
-            debugPrint( "Kicking to %s %s" % ( repr(kickto.tick), repr(kickto.next)) )
-            self.post2(self, (kickto, "inbox"))
-#            self.post(self, (kickto, "inbox"))
-#            kickto.deliv(self)
+            self.link(self, "outbox", (kickto, "inbox"))
+            self.send(self, "outbox")
+#            self.post2(self, (kickto, "inbox"))
             yield
 
     def deliv(self, message,inbox): # 461ms vs 186   
         self.inboxes[inbox].append(message)
         self.s.schedule(self.tick)
+
+    def send(self, message,outbox): # 461ms vs 186   
+        recipient,inbox = self.outboxes[outbox]
+        recipient.deliv(message,inbox)
 
     def post(self, message, (recipient, inbox)): #489ms vs  186
         recipient.inboxes[inbox].append(message)
@@ -111,6 +90,21 @@ class hackysacker(scheduled):
 
     def post2(self, message, (recipient, inbox)): #466ms vs  186
         recipient.deliv(message,inbox)
+
+    def activate(self, noschedule=False):
+        self.next = self.main().next
+        return self
+
+    def reschedule(self, R):
+        self.s.schedule(self.tick)
+
+    def tick(self):
+        try:
+            R = self.next()
+            if R:
+                self.s.schedule(R)
+        except StopIteration:
+            pass
 
 def runit(hs=10,ts=10,dbg=1):
     global hackysackers,turns,debug
@@ -120,18 +114,17 @@ def runit(hs=10,ts=10,dbg=1):
 
     hackysacker.counter= 0
     circle = []
+    s = scheduler.scheduler()
     one = hackysacker('0',circle)
     one.activate()
-    one.inboxes["inbox"].append(Bunch(name="default"))
+    one.deliv(Bunch(name="default"), "inbox")
 
-
-    s = scheduler.scheduler()
     for i in xrange(1,hackysackers):
-        H = hackysacker(str(i), circle).activate(noschedule=True)
+        H = hackysacker(str(i), circle).activate()
 
     H.run()
 
 if __name__ == "__main__":
     import profile
 #    runit()
-    profile.run("runit(10000, 1000, dbg=0)")
+    profile.run("runit(10, 10, dbg=0)")
