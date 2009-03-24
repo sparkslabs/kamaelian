@@ -1,6 +1,7 @@
 #!/usr/bin/python
+""" python -OO /usr/lib/python2.5/timeit.py -s "import Axon" "Axon.runit(1000,10000,0)" """
 
-if 0:
+if 1:
     import psyco
     psyco.full()
 
