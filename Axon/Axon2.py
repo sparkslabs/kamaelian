@@ -118,29 +118,3 @@ class hackysacker(component):
 #            self.post(self, (kickto, "inbox"))
             yield
 
-class Bunch(object):
-    def __init__(self, **argd):
-        self.__dict__.update(argd)
-
-def runit(hs=10,ts=10,dbg=1):
-    global hackysackers,turns,debug
-    hackysackers = hs
-    turns = ts
-    debug = dbg
-
-    hackysacker.counter= 0
-    circle = []
-    s = scheduler.scheduler()
-    one = hackysacker('0',circle)
-    one.activate()
-    one.deliv(Bunch(name="default"), "inbox")
-
-    for i in xrange(1,hackysackers):
-        H = hackysacker(str(i), circle).activate()
-
-    H.run()
-
-if __name__ == "__main__":
-    import profile
-#    runit()
-    profile.run("runit(30000, 10000, dbg=0)")
