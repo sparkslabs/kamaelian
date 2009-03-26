@@ -33,8 +33,10 @@ class component(scheduled):
     def tick(self):
         try:
             R = self.next()
-            if R:
-                self.s.schedule(R)
+            if hasattr(R, "handle"):
+               R.handle(self)
+            elif R:
+               self.reschedule(R)
         except StopIteration:
             pass
 
