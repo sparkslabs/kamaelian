@@ -29,10 +29,11 @@ class hackysacker(component):
             if hackysacker.counter>turns:
                 return
 
-            sender = self.inboxes["inbox"].pop(0)
+#            sender = self.inboxes["inbox"].pop(0)
+            sender = self.recv("inbox")
             hackysacker.counter +=1
             kickto = random.choice(self.circle)
-
+            self.post(self, (kickto, "inbox"))
             # Fastest (by far) - if we had "handle" built into components this would be valid/nice in places
             # even if it's out of character for the rest of the system
             # 10 loops, best of 3: 182 msec per loop
@@ -43,7 +44,6 @@ class hackysacker(component):
 #            self.send(self, "outbox")
 
             # Cleaner (and safe - it's a wrapper around link/send) but slowest - 10 loops, best of 3: 240 msec per loop
-            self.post(self, (kickto, "inbox"))
             yield
 
 class Bunch(object):
