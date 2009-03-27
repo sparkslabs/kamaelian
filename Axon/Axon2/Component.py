@@ -23,6 +23,7 @@ class component(scheduled):
     def post(self, message, (recipient, inbox)):
         self.link((self, "__temporary__"), (recipient, inbox))
         self.send(message, "__temporary__")
+        self.unlink( (self, "__temporary__") )
 
     def reschedule(self, R):
         self.s.schedule(self.tick)
@@ -43,3 +44,9 @@ class component(scheduled):
     def link(self, (sender, outbox), reciever):
         sender.outboxes[outbox] = reciever
 
+    def unlink(self, (sender, outbox)):
+        del sender.outboxes[outbox]
+#        sender.outboxes[outbox] = reciever
+
+    def recv(self, inbox="inbox"):
+        return self.inboxes[inbox].pop(0)
