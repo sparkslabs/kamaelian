@@ -70,5 +70,6 @@ def runit(hs=10,ts=10,dbg=1):
 if __name__ == "__main__":
     import profile
 #    runit()
+###    profile.run("runit(10000, 1000, dbg=0)")
     profile.run("runit(10000, 1000, dbg=0)")
 #    profile.run("runit(30000, 10000, dbg=0)")
