@@ -203,6 +203,10 @@ class Value(object):
         """ Returns a clone of the value """
         return Value(self.version, copy.deepcopy(self.value),self.store,self.key)
 
+    def immutablevalue_clone(self):
+        """ Returns a reference to the value - requires user to promise to _not_ change the value"""
+        return Value(self.version, self.value,self.store,self.key)
+
 class Collection(dict):
     """
     Collection() -> new Collection dict
@@ -228,9 +232,10 @@ class Store(object):
     
     You instantiate this as per the documentation for this module
     """
-    def __init__(self):
+    def __init__(self, immutablevalues=False):
         self.store = {}                # Threadsafe
         self.lock = threading.Lock()
+        self.immutablevalues = immutablevalues
 
     # ////---------------------- Direct access -----------------------\\\\
     # Let's make this lock free, and force the assumption that to do this the store must be locked.
@@ -239,7 +244,10 @@ class Store(object):
         """
         Retreive a value.  Returns a clone of the Value.  Not thread-safe.
         """
-        return self.store[key].clone()
+        if not self.immutablevalues:
+            return self.store[key].clone()
+        else:
+            return self.store[key].immutablevalue_clone()
 
     def __make(self, key):               # Writes Store Value - need to prevent multiple concurrent write
         """ Create a new key-value pair.  Not thread-safe """
