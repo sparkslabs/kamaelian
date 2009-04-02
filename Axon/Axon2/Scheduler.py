@@ -2,7 +2,10 @@
 
 import random
 
+from Axon2.STM import Store, ConcurrentUpdate, BusyRetry
+
 class scheduler(object):
+    __store = Store()
     s = None 
     # This is not thread safe. Should make threadsafe through the use of an STM store.
     # Import existing Kamaelia STM code "as is" I think
@@ -11,15 +14,33 @@ class scheduler(object):
     def scheduler(cls):
         # Should check out class state
         # Then work on it
-        if not cls.s:
-            cls.s = cls()
-        # Then try to commit
-        # And if fails retry or succeed gracefully
-        # Provides basics for services
-        # Indeed all services really act that way.
-        # Should have a mechanism for *releasing* as well in that case.
-        # Interesting thought.
-        return cls.s
+        sched = cls.__store.usevar("hello")
+        S = None
+        while S is None:
+           if not sched.value:
+              sched.set( cls() )
+              try:
+                 sched.commit()
+                 S = sched.value
+              except ConcurrentUpdate:
+                 sched = cls__store.usevar("hello")
+              except BusyRetry:
+                 sched = cls__store.usevar("hello")
+           else:
+               S = sched.value
+#        print ".",
+        return S
+
+
+#        if not cls.s:
+#            cls.s = cls()
+#        # Then try to commit
+#        # And if fails retry or succeed gracefully
+#        # Provides basics for services
+#        # Indeed all services really act that way.
+#        # Should have a mechanism for *releasing* as well in that case.
+#        # Interesting thought.
+#        return cls.s
 
     def __init__(self, *args):
         self.runq = []
