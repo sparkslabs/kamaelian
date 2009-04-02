@@ -5,7 +5,7 @@ import random
 from Axon2.STM import Store, ConcurrentUpdate, BusyRetry
 
 class scheduler(object):
-    __store = Store()
+    __store = Store(immutablevalues=True) # Promise to only store new schedulers if we change this...
     s = None 
     # This is not thread safe. Should make threadsafe through the use of an STM store.
     # Import existing Kamaelia STM code "as is" I think
@@ -14,7 +14,7 @@ class scheduler(object):
     def scheduler(cls):
         # Should check out class state
         # Then work on it
-        sched = cls.__store.usevar("hello")
+        sched = cls.__store.usevar("sched")
         S = None
         while S is None:
            if not sched.value:
@@ -23,9 +23,9 @@ class scheduler(object):
                  sched.commit()
                  S = sched.value
               except ConcurrentUpdate:
-                 sched = cls__store.usevar("hello")
+                 sched = cls__store.usevar("sched")
               except BusyRetry:
-                 sched = cls__store.usevar("hello")
+                 sched = cls__store.usevar("sched")
            else:
                S = sched.value
 #        print ".",
