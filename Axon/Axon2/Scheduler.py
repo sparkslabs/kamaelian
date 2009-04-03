@@ -7,8 +7,6 @@ from Axon2.STM import Store, ConcurrentUpdate, BusyRetry
 class scheduler(object):
     __store = Store(immutablevalues=True) # Promise to only store new schedulers if we change this...
     s = None 
-    # This is not thread safe. Should make threadsafe through the use of an STM store.
-    # Import existing Kamaelia STM code "as is" I think
 
     @classmethod
     def scheduler(cls):
@@ -28,19 +26,7 @@ class scheduler(object):
                  sched = cls__store.usevar("sched")
            else:
                S = sched.value
-#        print ".",
         return S
-
-
-#        if not cls.s:
-#            cls.s = cls()
-#        # Then try to commit
-#        # And if fails retry or succeed gracefully
-#        # Provides basics for services
-#        # Indeed all services really act that way.
-#        # Should have a mechanism for *releasing* as well in that case.
-#        # Interesting thought.
-#        return cls.s
 
     def __init__(self, *args):
         self.runq = []
