@@ -3,8 +3,18 @@
 from Axon2.Scheduler import scheduled
 
 class component(scheduled):
+    Inboxes = {
+        "inbox" : "default inbox",
+        "control" : "default control inbox",
+    }
+    Outboxes = {
+        "outbox" : "default outbox",
+        "signal" : "default control signal outbox",
+    }
     def __init__(self,  *argv, **argd):
-        self.inboxes = {"inbox" : [] }
+        self.inboxes = { }
+        for boxname in self.Inboxes:
+            self.inboxes[boxname] = []
         self.outboxes = { }
         super(component,self).__init__()
 
@@ -46,7 +56,6 @@ class component(scheduled):
 
     def unlink(self, (sender, outbox)):
         del sender.outboxes[outbox]
-#        sender.outboxes[outbox] = reciever
 
     def recv(self, inbox="inbox"):
         return self.inboxes[inbox].pop(0)
