@@ -1,0 +1,21 @@
+<html> <head> 
+<link rel="stylesheet" type="text/css" href="http://<TMPL_VAR NAME="host" ESCAPE="NONE">/blog.css" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<TMPL_VAR NAME="feedurl" ESCAPE="NONE">" />
+<title><TMPL_VAR NAME=blogname ESCAPE=NONE>: Login</title> </head> <body>
+<TMPL_VAR NAME="blogbanner" ESCAPE="NONE">
+<div class="pagebody">
+<div class="postbody">
+<form action="blog.cgi" method="post">
+<fieldset><legend>Login</legend>
+<input type="hidden" name="rm" value="login_auth" />
+
+<p>Username: <input type="text" name="name" /></p>
+<p>Password: <input type="password" name="pwd" /></p>
+
+<input type="submit" />
+</fieldset>
+</form>
+</div>
+</div>
+</body>
+</html>

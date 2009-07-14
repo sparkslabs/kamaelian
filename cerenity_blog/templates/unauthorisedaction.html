@@ -1,0 +1,20 @@
+<html> <head> 
+<link rel="stylesheet" type="text/css" href="http://<TMPL_VAR NAME="host" ESCAPE="NONE">/blog.css" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<TMPL_VAR NAME="feedurl" ESCAPE="NONE">" />
+<title> <TMPL_VAR NAME=blogname ESCAPE=NONE>: Action DENIED!</title> </head> <body>
+<TMPL_VAR NAME="blogbanner" ESCAPE="NONE">
+
+<h1> Authorisation DENIED !</h1>
+<div class="pagebody">
+<div class="postbody">
+
+<p>Sorry, <TMPL_VAR NAME="username" ESCAPE="NONE"> - you are not allowed to
+perform this action :<ul>
+   <TMPL_VAR NAME="action" ESCAPE="NONE"> !
+</ul>
+
+<p><a href="/cgi-bin/blog/blog.cgi"> Return to viewing main page</a>
+</div>
+</div>
+</body>
+</html>

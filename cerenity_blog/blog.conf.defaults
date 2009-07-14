@@ -1,0 +1,136 @@
+#
+# If you want to override the configuration here, COPY this file to
+# blog.conf, and remove all the settings that you DON'T change.
+# Any changes you make in blog.conf override those in this file.
+#
+# You are recommended NOT to change this file since it will massively
+# simplify your upgrade process.
+#
+[main]
+host: 127.0.0.1
+fullurl: http://127.0.0.1/cgi-bin/blog/blog.cgi
+feedurl: http://127.0.0.1/cgi-bin/blog/feed.cgi
+blogbanner: Name of your blog, any valid HTML, can be an image!
+preferredlanguage: en
+blogname: Yourblog
+blogsubject: vaguely
+description: Describe your blog
+contact: email@example.com
+
+#
+# You will want to change "Admin" to the login of the main user
+# TrustedUser would be replaced with the login of someone you trust.
+# These values are essentially as follows:
+#
+# action: list of userids of users you want to allow performing that action
+#
+[authorisation]
+newposting: Admin guest TrustedUser
+preview: Admin guest TrustedUser
+previewpostcomment: Admin guest TrustedUser
+previewreply: Admin guest TrustedUser
+previewcommentcomment: Admin guest TrustedUser
+savepostcomment: Admin guest TrustedUser
+savereply: Admin guest TrustedUser
+savecommentcomment: Admin guest TrustedUser
+savecommentvisible: Admin TrustedUser
+moderatecomment: Admin TrustedUser
+moderatecomments: Admin TrustedUser
+denycomment: Admin TrustedUser
+denynode: Admin TrustedUser
+moderatepost: Admin TrustedUser
+moderateposts: Admin TrustedUser
+denypost: Admin TrustedUser
+approvecomment: Admin
+approvenode: Admin
+approvepost: Admin
+todolist: Admin
+savepost: Admin guest TrustedUser
+savepostvisible: Admin TrustedUser
+addpostcomment: Admin TrustedUser guest
+addreply: Admin TrustedUser guest
+addcommentcomment: Admin TrustedUser guest
+newposting: Admin TrustedUser guest
+todolist: Admin TrustedUser guest
+viewpost: Admin TrustedUser guest
+welcome: Admin TrustedUser guest
+login_screen: Admin TrustedUser guest
+login_auth: Admin TrustedUser guest
+login_successful: Admin TrustedUser guest
+logout: Admin TrustedUser guest
+login_denied: Admin TrustedUser guest
+
+
+#
+# Disk formats used to be here, and are no longer needed.
+#
+# Keys expected in comments: Subject, Date, From, Posted, Visible, Ratings, Moderated,
+# Keys expected in posts: Subject, Date, From, Posted
+
+#
+# You *PROBABLY* don't want to change these, but can if you like.
+#
+[network_formats]
+#
+# post: How a post looks on the front page
+#
+post: <div class="box%(__COLOUR__)s">
+      <a href='blog.cgi?rm=viewpost&nodeid=%(__NODEID__)s'
+         ONMOUSEOVER="showSynopsis('&lt;b&gt;%(Subject)s&lt;/b&gt;&lt;P&gt;%(__ESCAPEDSUMMARY__)s &lt;p&gt; &lt;a href=\'blog.cgi?rm=viewpost&nodeid=%(__NODEID__)s\'&gt; read more &lt;/a&gt; %(extra)s','white')"
+         ONMOUSEOUT="removeBox()">
+      %(Subject)s</a>
+      <p class="postedby"><b>Posted:</b> %(From)s, %(Date)s<br>
+      Comments: %(__COMMENTS__)s
+      <noscript>
+      <p>%(__SUMMARY__)s
+      </noscript>
+      </div>
+
+#
+# comment: How a reply is formatted on a page
+#
+comment: %(Indent)s
+         <h3>%(Subject)s <a href="blog.cgi?rm=viewpost&nodeid=%(__NODEID__)s">#</a></h3>
+         <P>%(__BODY__)s
+         <div class="replyinfo"> -- %(From)s, %(Date)s, Rating: %(Ratings)s
+         (<a href="blog.cgi?rm=addreply&nodeid=%(__NODEID__)s">Reply</a>)
+         %(moderate)s %(extra)s </div>
+         %(Outdent)s
+
+#
+# fullpost: Full post view is formatted, including where the replies are displayed
+#
+fullpost: <h2>%(Subject)s</h2>
+          <div class="postinfo"> Posted by %(From)s on %(Date)s</div>
+          <p>%(__BODY__)s
+          <p> <a href="blog.cgi?rm=addreply&nodeid=%(__NODEID__)s"> Reply to this post </a>
+          <h2> Comments </h2>
+          %(__COMMENTTEXT__)s
+          <P><i><a href='blog.cgi'> Back to front page</a></i>
+#
+# shortmoderatecomment: The layout of a reply on the moderate comments page
+#
+shortmoderatecomment: <li> <a href="blog.cgi?rm=moderatecomment&nodeid=%(__NODEID__)s"> %(Subject)s </a>, %(From)s, %(Date)s <i>(in reply to <a href="blog.cgi?rm=viewpost&nodeid=%(__POSTID__)s"> %(PostSubject)s </a>) </i>
+
+#
+# shortmoderatepost: The layout of a top post on the moderate comments page
+#
+shortmoderatepost: <li> <a href="blog.cgi?rm=moderatepost&nodeid=%(__NODEID__)s"> %(Subject)s </a>, %(From)s, %(Date)s
+
+#
+# moderatecomment: The layout of a reply on the view where you read it to decide whether to allow it or not
+#
+moderatecomment: <B>%(Subject)s</B><br>
+                 <i>%(From)s, %(Date)s, Rating: %(Ratings)s</i>
+                 <P>%(__BODY__)s
+
+#
+# moderatepost: The layout of a post on the view where you read it to decide whether to allow it or not
+#
+moderatepost: <B>%(Subject)s</B><br>
+                 <i>%(From)s, %(Date)s</i>
+                 <P>%(__BODY__)s
+
+moderatedby: (Moderated by: %(Moderator)s)
+
+datetime: %(day)d %(month)s %(year)d at %(hours)02d:%(minutes)02d

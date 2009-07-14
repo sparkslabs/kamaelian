@@ -1,0 +1,31 @@
+<html> <head> 
+<link rel="stylesheet" type="text/css" href="http://<TMPL_VAR NAME="host" ESCAPE="NONE">/blog.css" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<TMPL_VAR NAME="feedurl" ESCAPE="NONE">" />
+<title><TMPL_VAR NAME=blogname ESCAPE=NONE>: Save Post</title> </head> <body>
+<TMPL_VAR NAME="blogbanner" ESCAPE="NONE">
+<h1> Save Post !</h1>
+<div class="pagebody">
+<div class="postbody">
+
+<p>Thanks, <TMPL_VAR NAME="username" ESCAPE="NONE">! 
+<TMPL_VAR NAME="savemessage" ESCAPE="NONE">
+
+<P>Please note that there may be a delay of a few days at the moment in
+messages appearing for a variety of reasons. Sorry! (But thanks for
+commenting)
+
+<table align="center" width="79%" border="1"><tr><td>
+
+  <h1> <TMPL_VAR NAME="posttitle" ESCAPE="HTML"></h1>
+
+  <p><i> Posted by <TMPL_VAR NAME="username" ESCAPE="NONE">, on <TMPL_VAR NAME="datetime" ESCAPE="NONE"></i>
+  <p><TMPL_VAR NAME="nodebody" ESCAPE="NONE">
+
+</td></tr></table>
+<hr>
+
+<p><a href="/cgi-bin/blog/blog.cgi"> Return to viewing main page</a>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<html> <head> 
+<link rel="stylesheet" type="text/css" href="http://<TMPL_VAR NAME="host" ESCAPE="NONE">/blog.css" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<TMPL_VAR NAME="feedurl" ESCAPE="NONE">" />
+<script src="/dojo.js" type="text/javascript" ></script>
+<script type="text/javascript">
+    dojo.require("dojo.widget.Editor");
+</script>
+
+<title><TMPL_VAR NAME=blogname ESCAPE=NONE>: Comment on Post</title> </head> <body>
+<TMPL_VAR NAME="blogbanner" ESCAPE="NONE">
+<h1> Chatback </h1>
+
+<p align="right"><TMPL_VAR NAME="personalmessage" ESCAPE="NONE">
+<div class="pagebody">
+<div class="postbody">
+<P>Comment on Post : <TMPL_VAR NAME="postsubject" ESCAPE="NONE">
+
+<form action="blog.cgi" method="post">
+<input type="hidden" name="rm" value="previewreply" />
+<input type="hidden" name="postid" value='<TMPL_VAR NAME="postid" ESCAPE="NONE">' />
+
+<p>Comment Heading: <input type="text" name="title" style="width: 79%"/>
+<p> Your comment:<br><ul>
+<textarea style="width:99%; height: 400px" name="nodebody"
+          dojoType="Editor"
+items="textGroup;blockGroup;justifyGroup;colorGroup;listGroup;indentGroup;linkGroup">
+</textarea></ul>
+<P> <input type="submit"  value="preview"/>
+</form>
+</div>
+</div>
+</body>
+</html>

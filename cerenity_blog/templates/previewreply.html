@@ -1,0 +1,48 @@
+<html> <head> 
+<link rel="stylesheet" type="text/css" href="http://<TMPL_VAR NAME="host" ESCAPE="NONE">/blog.css" />
+<title><TMPL_VAR NAME=blogname ESCAPE=NONE>: New Post : Preview</title> </head> <body>
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<TMPL_VAR NAME="feedurl" ESCAPE="NONE">" />
+<TMPL_VAR NAME="blogbanner" ESCAPE="NONE">
+<div class="pagebody">
+<div class="postbody">
+<h2> Preview New Comment/Reply to : <TMPL_VAR NAME="postsubject" ESCAPE="NONE"> </h2>
+<P> The following is a <B>preview</B> of your comment. To continue editting, skip down to
+the edit box. To post, hit "save".
+
+<table align="center" width="79%" border="1"><tr><td>
+  <h1> <TMPL_VAR NAME="posttitle" ESCAPE="HTML"></h1>
+  <p><i> Posted by <TMPL_VAR NAME="username" ESCAPE="NONE">, on <TMPL_VAR NAME="datetime" ESCAPE="NONE"></i>
+  <p><TMPL_VAR NAME="nodebody" ESCAPE="NONE">
+
+  <br /><hr />
+
+  <form action="blog.cgi" method="post"> <input type="hidden" name="rm" value="savereply" />
+  <input type="hidden" name="title" style="width: 89%" value='<TMPL_VAR NAME="posttitle" ESCAPE="NONE">'/>
+  <input type="hidden" name="nodebody" style="width: 89%" value='<TMPL_VAR NAME="nodebody" ESCAPE="URL">'/>
+  <input type="hidden" name="datetime" style="width: 89%" value='<TMPL_VAR NAME="datetime" ESCAPE="NONE">'/>
+  <input type="hidden" name="postid" style="width: 89%" value='<TMPL_VAR NAME="postid" ESCAPE="NONE">'/>
+
+  <h2>  <input type="submit"  value=">>> SAVE <<<"/></h2>
+
+  </form>
+</td></tr></table>
+
+<hr />
+
+<h2> Continue Editting Comment </h2>
+<form action="blog.cgi" method="post"> <input type="hidden" name="rm" value="previewreply" />
+
+<p>Post Title: <input type="text" name="title" style="width: 89%" value='<TMPL_VAR NAME="posttitle" ESCAPE="HTML">'/>
+
+<p> Post:
+<textarea rows="7" style="width: 99%" name="nodebody">
+<TMPL_VAR NAME="nodebody" ESCAPE="HTML">
+</textarea>
+
+<input type="hidden" name="postid" style="width: 89%" value='<TMPL_VAR NAME="postid" ESCAPE="NONE">'/>
+<h2>  <input type="submit"  value=">>> PREVIEW <<<"/></h2>
+</form>
+</div>
+</div>
+</body>
+</html>

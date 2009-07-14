@@ -1,0 +1,89 @@
+<html> 
+<head>
+<link rel="stylesheet" type="text/css" href="http://<TMPL_VAR NAME="host" ESCAPE="NONE">/blog.css"/>
+<link rel="stylesheet" type="text/css" href="http://<TMPL_VAR NAME="host" ESCAPE="NONE">/t/index.css"/>
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<TMPL_VAR NAME="feedurl" ESCAPE="NONE">" />
+<SCRIPT TYPE="text/javascript">
+var isNS4=document.layers?true:false;
+var isIE=document.all?true:false;
+var isNS6=!isIE&&document.getElementById?true:false;
+var old=!isNS4&&!isNS6&&!isIE;
+
+var skn;
+function initThis()
+{
+  if(isNS4)skn=document.boxview;
+  if(isIE)skn=document.all.boxview.style;
+  if(isNS6)skn=document.getElementById("boxview").style;
+}
+
+function noteEvent(_E) {
+   var t = new Date();
+   document.state.event.value = _E;
+   document.state.time.value = t.getTime();
+}
+
+function getLastEvent() {
+   return document.state.event.value;
+}
+
+function getLastTime() {
+   return document.state.time.value;
+}
+
+function showSynopsis(_m)
+{
+  noteEvent("NEWSYNOPSIS");
+  var content="<P>"+_m;
+  if(old)
+  {
+    alert("You have an old web browser:\n"+_m);
+        return;
+  }
+  else
+  {
+        if(isNS4)
+        {
+          skn.document.open();
+          skn.document.write(content);
+          skn.document.close();
+          skn.visibility="visible";
+        }
+        if(isNS6)
+        {
+          document.getElementById("boxview").innerHTML=content;
+        }
+        if(isIE)
+        {
+          document.all("boxview").innerHTML=content;
+          skn.visibility="visible";
+        }
+  }
+}
+</SCRIPT>
+</head>
+<body>
+<TMPL_VAR NAME="blogbanner" ESCAPE="NONE">
+<TMPL_VAR NAME="personalmessage" ESCAPE="NONE">
+<script>
+initThis();
+</script>
+
+<form name="state">
+<input type="hidden" name="event" value="init">
+<input type="hidden" name="time" value="0">
+</form>
+<div class="pagebody">
+<div class="postbody">
+<div class="boxview" id="boxview">
+<P><B> Synopsis Box </B>
+<p>When you move your mouse over the headlines on the boxes, this synopsis
+box will update.
+</div>
+<TMPL_VAR NAME="welcometext" ESCAPE="NONE">
+</div>
+</div>
+<script type="text/javascript" src="http://embed.technorati.com/embed/5fvdczr6u2.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<html> <head>
+<link rel="stylesheet" type="text/css" href="http://<TMPL_VAR NAME="host" ESCAPE="NONE">/blog.css"/>
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<TMPL_VAR NAME="feedurl" ESCAPE="NONE">" />
+<title><TMPL_VAR NAME=blogname ESCAPE=NONE>: Moderate Posts</title> </head> <body>
+<TMPL_VAR NAME="blogbanner" ESCAPE="NONE">
+
+<h1> Moderate Posts </h1>
+<div class="pagebody">
+<div class="postbody">
+<P> You've chosen to moderate posts. The following things need doing:
+
+<h3> Posts Not Visible Needing Moderation </h3>
+<TMPL_VAR NAME="invisiblenomod" ESCAPE="NONE">
+<TMPL_VAR NAME="posts" ESCAPE="NONE">
+
+<P><a href="blog.cgi"> Return to home </a>
+</div>
+</div>
+</body>
+</html>

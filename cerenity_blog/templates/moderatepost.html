@@ -1,0 +1,33 @@
+<html> <head> 
+<link rel="stylesheet" type="text/css" href="http://<TMPL_VAR NAME="host" ESCAPE="NONE">/blog.css" />
+<title><TMPL_VAR NAME=blogname ESCAPE=NONE>: Moderate a post</title> </head> <body>
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<TMPL_VAR NAME="feedurl" ESCAPE="NONE">" />
+<TMPL_VAR NAME="blogbanner" ESCAPE="NONE">
+
+<h1> Moderate A Post </h1>
+<div class="pagebody">
+<div class="postbody">
+
+<h3> Post Being Moderated </h3>
+<P>Allow the following post to be visible?
+
+<ul>
+<li> <a href='blog.cgi?rm=denynode&nodeid=<TMPL_VAR NAME="nodeid" ESCAPE="NONE">&next=moderateposts'>No, the post may not be posted as is.</a>
+<li> (Scroll down for yes!)
+</ul>
+
+<table width="80%" border="1" align="center"><tr><td>
+<TMPL_VAR NAME="formattednode" ESCAPE="NONE">
+</td></tr></table>
+
+<P>Allow the post above to be visible?
+<ul>
+<li> <a href='blog.cgi?rm=approvenode&nodeid=<TMPL_VAR NAME="nodeid" ESCAPE="NONE">&next=moderateposts'> Yes, the post may be posted as is. </a>
+<li> (Scroll up for NO!)
+</ul>
+
+<P><a href="blog.cgi"> Return to home </a>
+</div>
+</div>
+</body>
+</html>
