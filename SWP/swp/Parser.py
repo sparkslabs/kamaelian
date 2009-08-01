@@ -85,43 +85,47 @@ class Grammar(object):
       "oldexpression : factor INFIXOPERATOR expression"
       p[0] = ["infixepr", p[2],p[1],p[3]]
 
+   def p_factoid(self,p):
+      "factor : factoid"
+      p[0] = ["factor", p[1]]
+
    def p_expression_1b(self,p):
-      "factor : bracketedexpression"
+      "factoid : bracketedexpression"
       p[0] = ["bracketedexpression", p[1]]
 
    def p_expression_1c(self,p):
-      "factor : constructorexpression"
+      "factoid : constructorexpression"
       p[0] = ["constructorexpression", p[1]]
 
    def p_factor_1(self,p):
-      "factor : NUMBER"
+      "factoid : NUMBER"
       p[0] = ["number", p[1]]
 
    def p_factor_2(self,p):
-      "factor : STRING"
+      "factoid : STRING"
       p[0] = ["string", p[1]]
 
    def p_factor_3(self,p):
-      "factor : ID"
+      "factoid : ID"
       p[0] = ["ID", p[1]]
 
    def p_factor_3a(self,p):
-      "factor : factor DOT dotexpression"
+      "factor : factoid DOT dotexpression"
       p[0] = ["dottedfactor", p[1],p[3]]
 
    def p_factor_7(self,p):
-      "factor : factor trailer"
+      "factoid : factor trailer"
       p[0] = ["trailedfactor", p[1],p[2]]
 
    def p_factor_8(self,p):
-      "factor : factor trailertoo"
+      "factoid : factor trailertoo"
       p[0] = ["trailedfactor", p[1],p[2]]
 
    def p_dotexpression_1(self,p):
       "dotexpression : ID bracketedexpression"
       p[0] = ["methodcall", p[1],p[2]]
 
-   def p_dotexpression_2(self,p):
+   def p_dotexpression_2(self,p):                 # This is our problem definition
       "dotexpression : factor"
       p[0] = ["attribute", p[1]]
 
