@@ -29,7 +29,7 @@ class Grammar(object):
       "program : block"
       p[0] = ["program", p[1] ]
 
-   def p_block_1(self,p):                  
+   def p_block_1(self,p):
       "block : BLOCKSTART statement_list BLOCKEND";
       p[0] = ["block", p[2] ]
 
@@ -37,7 +37,7 @@ class Grammar(object):
       "block : BLOCKSTART BLOCKEND"
       p[0] = ["block", [] ]
 
-   def p_statement_list_1(self,p):          
+   def p_statement_list_1(self,p):
       "statement_list : statement statement_list"
       p[0] = ["statement_list", p[1], p[2] ]
 
@@ -57,22 +57,6 @@ class Grammar(object):
       "statement : expression ASSIGNMENT expression EOL"
       p[0] = ["assignment", p[2], p[1],p[3]] # Assignment op might be interesting...
 
-   def p_expression_1(self,p):
-      "oldexpression : factor"
-      p[0] = ["expression", p[1]]
-
-   def p_expression_1a(self,p):
-      "oldexpression : factor factorlist"
-      p[0] = ["functioncall", p[1],p[2]]
-
-   def p_factorlist_1a(self,p):
-      "factorlist : factor"
-      p[0] = ["factorlist", p[1]]
-
-   def p_factorlist_1b(self,p):
-      "factorlist : factorlist factor"
-      p[0] = ["factorlist", p[1],p[2]]
-
    def p_expression_2(self,p):
       "expression : oldexpression COMMA expression"
       p[0] = ["explist", p[1],p[3]]
@@ -85,9 +69,25 @@ class Grammar(object):
       "oldexpression : factor INFIXOPERATOR expression"
       p[0] = ["infixepr", p[2],p[1],p[3]]
 
+   def p_expression_1a(self,p):
+      "oldexpression : factorlist"
+      p[0] = ["oldexpression", p[1]]
+
+   def p_factorlist_1b(self,p):
+      "factorlist : factor factorlist"
+      p[0] = ["factorlist", p[1],p[2]]
+
+   def p_factorlist_1a(self,p):
+      "factorlist : factor"
+      p[0] = ["factorlist", p[1]]
+
    def p_factoid(self,p):
       "factor : factoid"
       p[0] = ["factor", p[1]]
+
+   def p_factor_3a(self,p):
+      "factor : factoid dotexpression"
+      p[0] = ["dottedfactor", p[1],p[2]]
 
    def p_expression_1b(self,p):
       "factoid : bracketedexpression"
@@ -109,10 +109,6 @@ class Grammar(object):
       "factoid : ID"
       p[0] = ["ID", p[1]]
 
-   def p_factor_3a(self,p):
-      "factor : factoid DOT dotexpression"
-      p[0] = ["dottedfactor", p[1],p[3]]
-
    def p_factor_7(self,p):
       "factoid : factor trailer"
       p[0] = ["trailedfactor", p[1],p[2]]
@@ -121,13 +117,9 @@ class Grammar(object):
       "factoid : factor trailertoo"
       p[0] = ["trailedfactor", p[1],p[2]]
 
-   def p_dotexpression_1(self,p):
-      "dotexpression : ID bracketedexpression"
-      p[0] = ["methodcall", p[1],p[2]]
-
-   def p_dotexpression_2(self,p):                 # This is our problem definition
-      "dotexpression : factor"
-      p[0] = ["attribute", p[1]]
+   def p_dotexpression_2(self,p):
+      "dotexpression : DOT factor"
+      p[0] = ["dottedfactor", p[2]]   # Used for attributes *and* floats
 
    def p_bracketedexpression_1(self,p):
       "bracketedexpression : BRA expression KET"
