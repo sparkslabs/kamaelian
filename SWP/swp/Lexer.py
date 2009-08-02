@@ -143,6 +143,7 @@ def newToken(toktype, value, lineno):
    newtok.type = toktype
    newtok.value = value
    newtok.lineno = lineno
+   newtok.lexpos = lineno
    return newtok
 
 import copy
