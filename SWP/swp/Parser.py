@@ -61,6 +61,10 @@ class Grammar(object):
       "expression : oldexpression COMMA expression"
       p[0] = ["explist", p[1],p[3]]
 
+   def p_expression_2list(self,p):
+      "expression : BRA2 expression KET2"
+      p[0] = ["explist", p[2]]
+
    def p_expression_2a(self,p):
       "expression : oldexpression"
       p[0] = ["explist", p[1]]
@@ -68,6 +72,10 @@ class Grammar(object):
    def p_expression_2b(self,p):
       "oldexpression : factor INFIXOPERATOR expression"
       p[0] = ["infixepr", p[2],p[1],p[3]]
+
+   def p_expression_2c(self,p):
+      "oldexpression : factor COLON expression"
+      p[0] = ["colonepr",p[1],p[3]]
 
    def p_expression_1a(self,p):
       "oldexpression : factorlist"
