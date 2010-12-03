@@ -24,6 +24,7 @@ Changelog: 1.5-1.6
      commented out)
 """
 import ply.lex as lex
+# import lex
 indent = 0
 
 tokens = (
@@ -122,8 +123,9 @@ def t_error(t):
     print "Illegal character '%s'" % t.value[0]
     t.skip(1)
 
+import re
 # Then we build the lexer
-lex.lex()
+lex.lex(reflags=re.MULTILINE)
 
 #
 # The lexer normally operates on full strings. Often however we deal with
