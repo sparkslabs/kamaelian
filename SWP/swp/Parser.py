@@ -13,6 +13,7 @@ r=[]
 
 import sys
 import ply.yacc as yacc
+# import yacc
 parse = 1
 
 class Grammar(object):
@@ -61,9 +62,13 @@ class Grammar(object):
       "expression : oldexpression COMMA expression"
       p[0] = ["explist", p[1],p[3]]
 
-   def p_expression_2list(self,p):
+   def p_expression_2list_1(self,p):
       "expression : BRA2 expression KET2"
       p[0] = ["explist", p[2]]
+
+   def p_expression_2list_2(self,p):
+      "expression : BRA2 KET2"
+      p[0] = ["explist", None]
 
    def p_expression_2a(self,p):
       "expression : oldexpression"
